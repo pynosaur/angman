@@ -1,0 +1,42 @@
+NAME: angman
+VERSION: 0.2.0
+DESCRIPTION: >
+  Terminal Pac-Man with authentic arcade mechanics, rendered entirely in curses.
+
+  Based on the original PAC-MAN arcade game (1980) created by Toru Iwatani
+  and published by Namco. Game mechanics reference the Pac-Man Dossier by
+  Jamey Pittman.
+
+  PAC-MAN is a registered trademark of Bandai Namco Entertainment Inc.
+  This project is an independent fan tribute for educational purposes and
+  is not affiliated with or endorsed by Bandai Namco.
+
+USAGE: |
+  angman                       Start the game
+  angman --help                Show this help
+  angman --version             Show version
+
+CONTROLS: |
+  Arrow keys / WASD            Move
+  Space                        Pause
+  Q / Esc                      Quit
+  R                            Restart
+
+GHOSTS: |
+  B = Blinky (red)    chases you directly
+  P = Pinky (pink)    targets 4 tiles ahead of you
+  I = Inky (cyan)     flanks using Blinky's position
+  K = Clyde (orange)  chases when far, retreats when close
+
+FRUITS: |
+  Spawn at random walkable tiles after eating enough dots.
+  Expire if not collected in time.
+  %    100 pts   (50 seconds)
+  $    200 pts   (40 seconds)
+  @    300 pts   (30 seconds)
+  &  1,000 pts   (20 seconds)
+
+CREDITS: |
+  Original PAC-MAN (1980) by Toru Iwatani, published by Namco (now Bandai Namco).
+  Ghost AI and game mechanics derived from "The Pac-Man Dossier" by Jamey Pittman.
+  This terminal adaptation by @spacemany2k38 as part of the Pynosaur project.
