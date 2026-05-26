@@ -68,7 +68,7 @@ SPD_PAC = 16           # 100% -- moves every single tick
 SPD_GHOST_NORMAL = 10  # ~62% -- clearly slower than pac
 SPD_GHOST_FRIGHT = 6   # ~37% -- very slow when frightened
 SPD_GHOST_TUNNEL = 4   # ~25% -- crawling in tunnels
-SPD_GHOST_EATEN = 20   # ~125% -- fast return to pen
+SPD_GHOST_EATEN = 13   # ~81% -- brisk return, not rocket speed
 SPD_THRESHOLD = 16
 
 # Scatter/chase timing in ticks (80ms/tick -> 12.5 tps)
