@@ -224,24 +224,38 @@ def _run(stdscr):
             'fruit_pos': (14, 17),
         }
 
+    def _jitter_targets():
+        """Randomize scatter targets each round."""
+        result = []
+        for sx, sy in SCATTER_TARGETS:
+            jx = sx + random.randint(-6, 6)
+            jy = sy + random.randint(-6, 6)
+            jx = max(0, min(MW - 1, jx))
+            jy = max(0, min(MH - 1, jy))
+            result.append((jx, jy))
+        return result
+
     def new_round():
         blinky_dir = random.choice([LEFT, UP, RIGHT])
+        start_mode = random.choice(['scatter', 'chase'])
         return {
             'px': pac_start[0], 'py': pac_start[1],
             'pdir': LEFT, 'pnext': LEFT,
             'pac_acc': 0,
             'ghosts': [
                 # [x, y, dir, mode, fright_t, in_pen, speed_acc]
-                [14, 11, blinky_dir, 'scatter', 0, False,
+                [14, 11, blinky_dir, start_mode, 0, False,
                     random.randint(0, SPD_THRESHOLD - 1)],
-                [14, 14, UP, 'scatter', 0, True,
+                [14, 14, UP, start_mode, 0, True,
                     random.randint(0, SPD_THRESHOLD - 1)],
-                [12, 14, UP, 'scatter', 0, True,
+                [12, 14, UP, start_mode, 0, True,
                     random.randint(0, SPD_THRESHOLD - 1)],
-                [16, 14, UP, 'scatter', 0, True,
+                [16, 14, UP, start_mode, 0, True,
                     random.randint(0, SPD_THRESHOLD - 1)],
             ],
-            'mode_idx': 0, 'mode_t': 0,
+            'scatter_targets': _jitter_targets(),
+            'mode_idx': 0,
+            'mode_t': random.randint(0, 30),
             'state': 'ready', 'ready_t': 25,
             'dead_t': 0, 'won_t': 0, 'combo': 0,
             'fright_active': False,
@@ -257,7 +271,7 @@ def _run(stdscr):
         elif mode == 'eaten':
             return ghost_pen_exit
         elif mode == 'scatter':
-            return SCATTER_TARGETS[gi]
+            return r['scatter_targets'][gi]
         else:
             if gi == 0:
                 return (px, py)
@@ -277,7 +291,7 @@ def _run(stdscr):
             else:
                 if _dist_sq((gh[0], gh[1]), (px, py)) > 64:
                     return (px, py)
-                return SCATTER_TARGETS[3]
+                return r['scatter_targets'][3]
 
     def move_ghost(gi, r, g):
         gh = r['ghosts'][gi]
@@ -340,7 +354,7 @@ def _run(stdscr):
         if gh[3] == 'frightened' and choices:
             chosen = random.choice(choices)
         elif choices:
-            if random.random() < 0.25:
+            if random.random() < 0.35:
                 chosen = random.choice(choices)
             else:
                 chosen = best_d
@@ -458,6 +472,8 @@ def _run(stdscr):
                 r['mode_t'] = 0
                 r['mode_idx'] += 1
                 new_mode = 'scatter' if r['mode_idx'] % 2 == 0 else 'chase'
+                if new_mode == 'scatter':
+                    r['scatter_targets'] = _jitter_targets()
                 for gh in r['ghosts']:
                     if gh[3] not in ('frightened', 'eaten') and not gh[5]:
                         gh[3] = new_mode
