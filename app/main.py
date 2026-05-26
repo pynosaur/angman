@@ -335,7 +335,10 @@ def _run(stdscr):
         if gh[3] == 'frightened' and choices:
             chosen = random.choice(choices)
         elif choices:
-            chosen = best_d
+            if random.random() < 0.25:
+                chosen = random.choice(choices)
+            else:
+                chosen = best_d
         else:
             nx = (gh[0] + opp[0]) % MW
             ny = gh[1] + opp[1]
