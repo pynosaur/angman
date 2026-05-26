@@ -324,6 +324,7 @@ def _run(stdscr):
         if gh[3] == 'eaten' and (gh[0], gh[1]) == ghost_pen_exit:
             gh[3] = 'scatter' if r['mode_idx'] % 2 == 0 else 'chase'
             gh[5] = True
+            gh[6] = 0
             gh[0], gh[1] = 14, 14
             return
 
