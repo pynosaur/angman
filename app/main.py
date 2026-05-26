@@ -225,16 +225,21 @@ def _run(stdscr):
         }
 
     def new_round():
+        blinky_dir = random.choice([LEFT, UP, RIGHT])
         return {
             'px': pac_start[0], 'py': pac_start[1],
             'pdir': LEFT, 'pnext': LEFT,
             'pac_acc': 0,
             'ghosts': [
                 # [x, y, dir, mode, fright_t, in_pen, speed_acc]
-                [14, 11, LEFT, 'scatter', 0, False, 0],
-                [14, 14, UP, 'scatter', 0, True, 0],
-                [12, 14, UP, 'scatter', 0, True, 0],
-                [16, 14, UP, 'scatter', 0, True, 0],
+                [14, 11, blinky_dir, 'scatter', 0, False,
+                    random.randint(0, SPD_THRESHOLD - 1)],
+                [14, 14, UP, 'scatter', 0, True,
+                    random.randint(0, SPD_THRESHOLD - 1)],
+                [12, 14, UP, 'scatter', 0, True,
+                    random.randint(0, SPD_THRESHOLD - 1)],
+                [16, 14, UP, 'scatter', 0, True,
+                    random.randint(0, SPD_THRESHOLD - 1)],
             ],
             'mode_idx': 0, 'mode_t': 0,
             'state': 'ready', 'ready_t': 25,
